@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "experiment_name": "ttm_etth2_v6",
+  "model": {
+    "name": "TTM",
+    "model_id": "ibm-granite/granite-timeseries-ttm-r2",
+    "patch_len": 64,
+    "device": "cuda:7",
+    "cache_dtype": "float16",
+    "revision": "3442406f106122f414a11f72b4ebfe4878bec89d",
+    "channel_aggregation": "concat_same_time_patch"
+  },
+  "data": {
+    "dataset": "ETTh2",
+    "source": "thuml/Time-Series-Library",
+    "target": "OT",
+    "seq_len": 512,
+    "pred_len": 96,
+    "origin_seq_len": 512,
+    "origin_pred_len": 96,
+    "split": "discovery",
+    "origin_stride": 4,
+    "max_origins": 1024,
+    "strict_guard": true,
+    "train_end": 8640,
+    "validation_end": 11520,
+    "test_end": 14400,
+    "discovery_end": 8640,
+    "local_path": "LOCAL_PATH",
+    "features": "M",
+    "target_columns": []
+  },
+  "future_target": {
+    "bins": 16,
+    "spectral_bands": 4,
+    "pca_dim": 8,
+    "normalization": "robust_history_window",
+    "scope": "all"
+  },
+  "mi": {
+    "hidden_pca_dim": 8,
+    "k": 5,
+    "null_permutations": 199,
+    "null_mode": "sampled",
+    "seed": 2021,
+    "jitter": 1e-08,
+    "estimator": "ksg_gpu",
+    "shift_batch_size": 8
+  },
+  "runtime": {
+    "batch_size": 64,
+    "output_root": "results/information_anchor_v6_reference",
+    "cache_root": "results/information_anchor_cache_v5_global_reference",
+    "offline": true
+  },
+  "protocol_version": "information-anchor-v6-multidataset"
+}

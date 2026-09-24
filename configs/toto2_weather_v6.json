@@ -1,0 +1,57 @@
+{
+  "data": {
+    "dataset": "weather",
+    "discovery_end": 36887,
+    "features": "M",
+    "local_path": "LOCAL_PATH",
+    "max_origins": 1024,
+    "origin_pred_len": 96,
+    "origin_seq_len": 384,
+    "origin_stride": 4,
+    "pred_len": 96,
+    "seq_len": 384,
+    "source": "thuml/Time-Series-Library",
+    "split": "discovery",
+    "strict_guard": true,
+    "target": "T (degC)",
+    "target_columns": [],
+    "test_end": 52696,
+    "train_end": 36887,
+    "validation_end": 42157
+  },
+  "experiment_name": "toto2_weather_v6",
+  "future_target": {
+    "bins": 16,
+    "normalization": "robust_history_window",
+    "pca_dim": 8,
+    "scope": "all",
+    "spectral_bands": 4
+  },
+  "mi": {
+    "estimator": "ksg_gpu",
+    "hidden_pca_dim": 8,
+    "jitter": 1e-08,
+    "k": 5,
+    "null_mode": "sampled",
+    "null_permutations": 199,
+    "seed": 2021,
+    "shift_batch_size": 8
+  },
+  "model": {
+    "cache_dtype": "float32",
+    "channel_aggregation": "concat_same_time_patch",
+    "device": "cuda:4",
+    "model_id": "Datadog/Toto-2.0-22m",
+    "name": "Toto2",
+    "patch_len": 32,
+    "revision": "685e4ae3e2be8d8998025e53dd98e7fdcb296a89"
+  },
+  "protocol_version": "information-anchor-v6-multidataset",
+  "runtime": {
+    "batch_size": 16,
+    "cache_root": "results/information_anchor_cache_v5_global_reference",
+    "offline": true,
+    "output_root": "results/information_anchor_v6_reference"
+  },
+  "schema_version": 1
+}

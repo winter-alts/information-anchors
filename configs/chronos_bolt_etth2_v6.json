@@ -1,0 +1,57 @@
+{
+  "data": {
+    "dataset": "ETTh2",
+    "discovery_end": 8640,
+    "features": "M",
+    "local_path": "LOCAL_PATH",
+    "max_origins": 1024,
+    "origin_pred_len": 96,
+    "origin_seq_len": 512,
+    "origin_stride": 4,
+    "pred_len": 96,
+    "seq_len": 512,
+    "source": "thuml/Time-Series-Library",
+    "split": "discovery",
+    "strict_guard": true,
+    "target": "OT",
+    "target_columns": [],
+    "test_end": 14400,
+    "train_end": 8640,
+    "validation_end": 11520
+  },
+  "experiment_name": "chronos_bolt_etth2_v6",
+  "future_target": {
+    "bins": 16,
+    "normalization": "robust_history_window",
+    "pca_dim": 8,
+    "scope": "all",
+    "spectral_bands": 4
+  },
+  "mi": {
+    "estimator": "ksg_gpu",
+    "hidden_pca_dim": 8,
+    "jitter": 1e-08,
+    "k": 5,
+    "null_mode": "sampled",
+    "null_permutations": 199,
+    "seed": 2021,
+    "shift_batch_size": 8
+  },
+  "model": {
+    "cache_dtype": "float16",
+    "channel_aggregation": "concat_same_time_patch",
+    "device": "cuda:6",
+    "model_id": "amazon/chronos-bolt-base",
+    "name": "ChronosBolt",
+    "patch_len": 16,
+    "revision": "5d9f166d69f47aef3401367a7b842e78fe97b121"
+  },
+  "protocol_version": "information-anchor-v6-multidataset",
+  "runtime": {
+    "batch_size": 8,
+    "cache_root": "results/information_anchor_cache_v5_global_reference",
+    "offline": true,
+    "output_root": "results/information_anchor_v6_reference"
+  },
+  "schema_version": 1
+}

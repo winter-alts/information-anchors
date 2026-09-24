@@ -1,0 +1,606 @@
+{
+  "protocol_version": "information-anchor-v6-multidataset",
+  "semantic_protocol": "future-semantics-v6.1-12-nonredundant",
+  "models": {
+    "Chronos2": {
+      "compute_path": "encoder-only",
+      "cross_channel_interaction": "joint-multivariate",
+      "attention_path": "history plus masked future-query encoder",
+      "forecast_readout": "direct multi-patch quantile head from future-query states",
+      "analyzed_history_unit": "post-encoder history patch"
+    },
+    "Moirai2": {
+      "compute_path": "causal-decoder-style",
+      "cross_channel_interaction": "packed-joint-multivariate",
+      "attention_path": "packed causal attention",
+      "forecast_readout": "multi-token quantile head over prediction tokens",
+      "analyzed_history_unit": "post-block packed history patch"
+    },
+    "Toto2": {
+      "compute_path": "decoder-only",
+      "cross_channel_interaction": "joint-time-variate",
+      "attention_path": "alternating causal time and variate attention",
+      "forecast_readout": "quantile head",
+      "analyzed_history_unit": "post-decoder history patch"
+    },
+    "TimesFM2.5": {
+      "compute_path": "decoder-only",
+      "cross_channel_interaction": "channel-independent",
+      "attention_path": "causal prefill followed by autoregressive output patches",
+      "forecast_readout": "point and quantile patch head",
+      "analyzed_history_unit": "prefill history patch"
+    },
+    "ChronosBolt": {
+      "compute_path": "encoder-decoder",
+      "cross_channel_interaction": "channel-independent",
+      "attention_path": "T5 encoder self-attention and decoder cross-attention",
+      "forecast_readout": "direct multi-patch quantile decoder",
+      "analyzed_history_unit": "encoder history patch read by decoder cross-attention"
+    },
+    "TTM": {
+      "compute_path": "mixer",
+      "cross_channel_interaction": "shared common-channel mixer",
+      "attention_path": "adaptive patch mixer stages",
+      "forecast_readout": "direct multi-horizon forecast decoder",
+      "analyzed_history_unit": "common-grid encoder and forecast-decoder patch stage"
+    }
+  },
+  "datasets": {
+    "etth1": {
+      "dataset": "ETTh1",
+      "target": "OT",
+      "seq_len": 512,
+      "train_end": 8640,
+      "validation_end": 11520,
+      "test_end": 14400
+    },
+    "etth2": {
+      "dataset": "ETTh2",
+      "target": "OT",
+      "seq_len": 512,
+      "train_end": 8640,
+      "validation_end": 11520,
+      "test_end": 14400
+    },
+    "ettm1": {
+      "dataset": "ETTm1",
+      "target": "OT",
+      "seq_len": 512,
+      "train_end": 34560,
+      "validation_end": 46080,
+      "test_end": 57600
+    },
+    "ettm2": {
+      "dataset": "ETTm2",
+      "target": "OT",
+      "seq_len": 512,
+      "train_end": 34560,
+      "validation_end": 46080,
+      "test_end": 57600
+    },
+    "weather": {
+      "dataset": "weather",
+      "target": "T (degC)",
+      "seq_len": 384,
+      "train_end": 36887,
+      "validation_end": 42157,
+      "test_end": 52696
+    },
+    "electricity16": {
+      "dataset": "electricity",
+      "target": "0",
+      "seq_len": 512,
+      "train_end": 18412,
+      "validation_end": 21042,
+      "test_end": 26304,
+      "target_columns": [
+        "0",
+        "1",
+        "24",
+        "46",
+        "69",
+        "92",
+        "115",
+        "137",
+        "160",
+        "183",
+        "205",
+        "228",
+        "251",
+        "274",
+        "296",
+        "319"
+      ]
+    },
+    "traffic16": {
+      "dataset": "traffic",
+      "target": "0",
+      "seq_len": 512,
+      "train_end": 12280,
+      "validation_end": 14034,
+      "test_end": 17544,
+      "target_columns": [
+        "0",
+        "1",
+        "62",
+        "124",
+        "185",
+        "246",
+        "308",
+        "369",
+        "431",
+        "492",
+        "553",
+        "615",
+        "676",
+        "737",
+        "799",
+        "860"
+      ]
+    }
+  },
+  "matrix": [
+    {
+      "config": "configs/information_anchor/v6_registered/chronos2_etth1_v6.json",
+      "model": "Chronos2",
+      "dataset_key": "etth1",
+      "dataset": "ETTh1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:2"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos2_etth2_v6.json",
+      "model": "Chronos2",
+      "dataset_key": "etth2",
+      "dataset": "ETTh2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:2"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos2_ettm1_v6.json",
+      "model": "Chronos2",
+      "dataset_key": "ettm1",
+      "dataset": "ETTm1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:2"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos2_ettm2_v6.json",
+      "model": "Chronos2",
+      "dataset_key": "ettm2",
+      "dataset": "ETTm2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:2"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos2_weather_v6.json",
+      "model": "Chronos2",
+      "dataset_key": "weather",
+      "dataset": "weather",
+      "target_channel": "T (degC)",
+      "channels": "all",
+      "seq_len": 384,
+      "pred_len": 96,
+      "device": "cuda:2"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos2_electricity16_v6.json",
+      "model": "Chronos2",
+      "dataset_key": "electricity16",
+      "dataset": "electricity",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:2"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos2_traffic16_v6.json",
+      "model": "Chronos2",
+      "dataset_key": "traffic16",
+      "dataset": "traffic",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:2"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/moirai2_etth1_v6.json",
+      "model": "Moirai2",
+      "dataset_key": "etth1",
+      "dataset": "ETTh1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:3"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/moirai2_etth2_v6.json",
+      "model": "Moirai2",
+      "dataset_key": "etth2",
+      "dataset": "ETTh2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:3"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/moirai2_ettm1_v6.json",
+      "model": "Moirai2",
+      "dataset_key": "ettm1",
+      "dataset": "ETTm1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:3"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/moirai2_ettm2_v6.json",
+      "model": "Moirai2",
+      "dataset_key": "ettm2",
+      "dataset": "ETTm2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:3"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/moirai2_weather_v6.json",
+      "model": "Moirai2",
+      "dataset_key": "weather",
+      "dataset": "weather",
+      "target_channel": "T (degC)",
+      "channels": "all",
+      "seq_len": 384,
+      "pred_len": 96,
+      "device": "cuda:3"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/moirai2_electricity16_v6.json",
+      "model": "Moirai2",
+      "dataset_key": "electricity16",
+      "dataset": "electricity",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:3"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/moirai2_traffic16_v6.json",
+      "model": "Moirai2",
+      "dataset_key": "traffic16",
+      "dataset": "traffic",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:3"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/toto2_etth1_v6.json",
+      "model": "Toto2",
+      "dataset_key": "etth1",
+      "dataset": "ETTh1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:4"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/toto2_etth2_v6.json",
+      "model": "Toto2",
+      "dataset_key": "etth2",
+      "dataset": "ETTh2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:4"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/toto2_ettm1_v6.json",
+      "model": "Toto2",
+      "dataset_key": "ettm1",
+      "dataset": "ETTm1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:4"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/toto2_ettm2_v6.json",
+      "model": "Toto2",
+      "dataset_key": "ettm2",
+      "dataset": "ETTm2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:4"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/toto2_weather_v6.json",
+      "model": "Toto2",
+      "dataset_key": "weather",
+      "dataset": "weather",
+      "target_channel": "T (degC)",
+      "channels": "all",
+      "seq_len": 384,
+      "pred_len": 96,
+      "device": "cuda:4"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/toto2_electricity16_v6.json",
+      "model": "Toto2",
+      "dataset_key": "electricity16",
+      "dataset": "electricity",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:4"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/toto2_traffic16_v6.json",
+      "model": "Toto2",
+      "dataset_key": "traffic16",
+      "dataset": "traffic",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:4"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/timesfm25_etth1_v6.json",
+      "model": "TimesFM2.5",
+      "dataset_key": "etth1",
+      "dataset": "ETTh1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:5"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/timesfm25_etth2_v6.json",
+      "model": "TimesFM2.5",
+      "dataset_key": "etth2",
+      "dataset": "ETTh2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:5"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/timesfm25_ettm1_v6.json",
+      "model": "TimesFM2.5",
+      "dataset_key": "ettm1",
+      "dataset": "ETTm1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:5"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/timesfm25_ettm2_v6.json",
+      "model": "TimesFM2.5",
+      "dataset_key": "ettm2",
+      "dataset": "ETTm2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:5"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/timesfm25_weather_v6.json",
+      "model": "TimesFM2.5",
+      "dataset_key": "weather",
+      "dataset": "weather",
+      "target_channel": "T (degC)",
+      "channels": "all",
+      "seq_len": 384,
+      "pred_len": 96,
+      "device": "cuda:5"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/timesfm25_electricity16_v6.json",
+      "model": "TimesFM2.5",
+      "dataset_key": "electricity16",
+      "dataset": "electricity",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:5"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/timesfm25_traffic16_v6.json",
+      "model": "TimesFM2.5",
+      "dataset_key": "traffic16",
+      "dataset": "traffic",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:5"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos_bolt_etth1_v6.json",
+      "model": "ChronosBolt",
+      "dataset_key": "etth1",
+      "dataset": "ETTh1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:6"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos_bolt_etth2_v6.json",
+      "model": "ChronosBolt",
+      "dataset_key": "etth2",
+      "dataset": "ETTh2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:6"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos_bolt_ettm1_v6.json",
+      "model": "ChronosBolt",
+      "dataset_key": "ettm1",
+      "dataset": "ETTm1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:6"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos_bolt_ettm2_v6.json",
+      "model": "ChronosBolt",
+      "dataset_key": "ettm2",
+      "dataset": "ETTm2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:6"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos_bolt_weather_v6.json",
+      "model": "ChronosBolt",
+      "dataset_key": "weather",
+      "dataset": "weather",
+      "target_channel": "T (degC)",
+      "channels": "all",
+      "seq_len": 384,
+      "pred_len": 96,
+      "device": "cuda:6"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos_bolt_electricity16_v6.json",
+      "model": "ChronosBolt",
+      "dataset_key": "electricity16",
+      "dataset": "electricity",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:6"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/chronos_bolt_traffic16_v6.json",
+      "model": "ChronosBolt",
+      "dataset_key": "traffic16",
+      "dataset": "traffic",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:6"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/ttm_etth1_v6.json",
+      "model": "TTM",
+      "dataset_key": "etth1",
+      "dataset": "ETTh1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:7"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/ttm_etth2_v6.json",
+      "model": "TTM",
+      "dataset_key": "etth2",
+      "dataset": "ETTh2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:7"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/ttm_ettm1_v6.json",
+      "model": "TTM",
+      "dataset_key": "ettm1",
+      "dataset": "ETTm1",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:7"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/ttm_ettm2_v6.json",
+      "model": "TTM",
+      "dataset_key": "ettm2",
+      "dataset": "ETTm2",
+      "target_channel": "OT",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:7"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/ttm_weather_v6.json",
+      "model": "TTM",
+      "dataset_key": "weather",
+      "dataset": "weather",
+      "target_channel": "T (degC)",
+      "channels": "all",
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:7"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/ttm_electricity16_v6.json",
+      "model": "TTM",
+      "dataset_key": "electricity16",
+      "dataset": "electricity",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:7"
+    },
+    {
+      "config": "configs/information_anchor/v6_registered/ttm_traffic16_v6.json",
+      "model": "TTM",
+      "dataset_key": "traffic16",
+      "dataset": "traffic",
+      "target_channel": "0",
+      "channels": 16,
+      "seq_len": 512,
+      "pred_len": 96,
+      "device": "cuda:7"
+    }
+  ]
+}
